@@ -1,0 +1,19 @@
+[gd_resource type="Sky" format=3 uid="uid://xkjmqq2yhjdw"]
+
+[ext_resource type="Texture2D" uid="uid://b7l4hcwept60" path="res://assets/pics/star_map.png" id="1_0kyu0"]
+[ext_resource type="Shader" uid="uid://bs1tfhuuuo73h" path="res://shaders/sky.gdshader" id="1_hl6he"]
+[ext_resource type="Texture2D" uid="uid://bls665sn2y053" path="res://assets/pics/result.png" id="1_jv7be"]
+[ext_resource type="Texture2D" uid="uid://b5rnqxvcjr3e2" path="res://assets/pics/star_data.png" id="3_ouahn"]
+[ext_resource type="Texture2D" uid="uid://5b6kjwykyn1q" path="res://assets/pics/1kto4kK.jpg" id="4_ouahn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ouahn"]
+shader = ExtResource("1_hl6he")
+shader_parameter/sky_thingy = ExtResource("1_jv7be")
+shader_parameter/stars = ExtResource("3_ouahn")
+shader_parameter/map = ExtResource("1_0kyu0")
+shader_parameter/temp_gradient = ExtResource("4_ouahn")
+
+[resource]
+sky_material = SubResource("ShaderMaterial_ouahn")
+process_mode = 1
+radiance_size = 6

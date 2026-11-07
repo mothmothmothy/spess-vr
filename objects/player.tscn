@@ -1,0 +1,268 @@
+[gd_scene format=3 uid="uid://6xxmx5qiedy6"]
+
+[ext_resource type="Script" uid="uid://dhxf6xbypkwd1" path="res://scripts/vr_startup.gd" id="1_3rerk"]
+[ext_resource type="Script" uid="uid://bymlthryfayb2" path="res://scripts/player/plr_phys.gd" id="1_eqqp1"]
+[ext_resource type="Script" uid="uid://b875hopljeev6" path="res://scripts/player/torso_force_transfer.gd" id="1_ykyjo"]
+[ext_resource type="Script" uid="uid://des6rd22tco68" path="res://scripts/player/muscle.gd" id="2_3rerk"]
+[ext_resource type="Script" uid="uid://cknkvgwmaeolh" path="res://scripts/player/force_holder.gd" id="2_uxov2"]
+[ext_resource type="Script" uid="uid://c50fx4h3jesil" path="res://scripts/player/plr_control.gd" id="4_nmc1l"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_eqqp1"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f46kd"]
+height = 0.2
+radius = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_uxov2"]
+size = Vector3(0.03, 0.09, 0.07)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eqqp1"]
+size = Vector3(0.03, 0.09, 0.07)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i825w"]
+size = Vector3(0.025, 0.03, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3rerk"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ykyjo"]
+radius = 0.05
+height = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eqqp1"]
+radius = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nmc1l"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f46kd"]
+material = SubResource("StandardMaterial3D_nmc1l")
+size = Vector3(0.033, 0.093, 0.073)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f46kd"]
+size = Vector3(0.1, 0.2, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3rerk"]
+size = Vector3(0.1, 0.2, 0.1)
+
+[node name="Player" type="Node3D" unique_id=853351773]
+script = ExtResource("1_3rerk")
+
+[node name="real" type="XROrigin3D" parent="." unique_id=1243517935]
+
+[node name="head" type="XRController3D" parent="real" unique_id=915336272]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+tracker = &"head"
+
+[node name="lhand" type="XRController3D" parent="real" unique_id=1656177753]
+transform = Transform3D(0.76040596, -0.41745713, -0.49750605, 0, 0.76604444, -0.6427876, 0.64944804, 0.48877952, 0.58250475, -0.01, 1.926, 0)
+tracker = &"left_hand"
+pose = &"grip"
+
+[node name="rhand" type="XRController3D" parent="real" unique_id=1329697253]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.48569614, 0)
+tracker = &"right_hand"
+pose = &"grip"
+
+[node name="camera" type="XRCamera3D" parent="real" unique_id=1746357647]
+
+[node name="head" type="RigidBody3D" parent="." unique_id=1820406150]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mass = 10.0
+can_sleep = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="head" unique_id=1688143326]
+mesh = SubResource("SphereMesh_eqqp1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="head" unique_id=322848518]
+shape = SubResource("CylinderShape3D_f46kd")
+
+[node name="lhand" type="RigidBody3D" parent="." unique_id=1262745940]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3013213, 0, 0)
+can_sleep = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="lhand" unique_id=1947305902]
+mesh = SubResource("BoxMesh_uxov2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="lhand" unique_id=764021835]
+shape = SubResource("BoxShape3D_eqqp1")
+
+[node name="testbody" type="RigidBody3D" parent="." unique_id=592449100]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4260713, 0.5632527, 0)
+mass = 60.0
+can_sleep = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="testbody" unique_id=673134897]
+mesh = SubResource("BoxMesh_uxov2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="testbody" unique_id=583995399]
+shape = SubResource("BoxShape3D_eqqp1")
+
+[node name="test" type="RigidBody3D" parent="." unique_id=1668660555 node_paths=PackedStringArray("moving_body", "reaction_body", "physics", "hand", "debug_node")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.53875744, 0)
+can_sleep = false
+script = ExtResource("2_3rerk")
+moving_body = NodePath(".")
+reaction_body = NodePath("../testbody")
+physics = NodePath("../physics")
+hand = NodePath("../real/lhand")
+debug_node = NodePath("../thingy")
+linear_spring_strength = 50.0
+linear_spring_damping = 50.0
+angular_spring_strength = 0.004
+angular_spring_damping = 20.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="test" unique_id=66090279]
+mesh = SubResource("BoxMesh_uxov2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="test" unique_id=1055645581]
+shape = SubResource("BoxShape3D_eqqp1")
+
+[node name="thingy" type="MeshInstance3D" parent="." unique_id=1858257010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45853287, 0.68963283, 5.9604645e-08)
+mesh = SubResource("BoxMesh_i825w")
+
+[node name="rhand" type="RigidBody3D" parent="." unique_id=288446883]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, 0)
+can_sleep = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="rhand" unique_id=1762539933]
+mesh = SubResource("BoxMesh_uxov2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rhand" unique_id=557760202]
+shape = SubResource("BoxShape3D_eqqp1")
+
+[node name="torso_root" type="RigidBody3D" parent="." unique_id=893502833 node_paths=PackedStringArray("lhand", "rhand")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mass = 20.0
+can_sleep = false
+script = ExtResource("1_ykyjo")
+lhand = NodePath("desired_lhand")
+rhand = NodePath("desired_rhand")
+
+[node name="neck" type="PinJoint3D" parent="torso_root" unique_id=416271553]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17549321, 0)
+node_a = NodePath("..")
+node_b = NodePath("../../head")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="torso_root" unique_id=339484350]
+shape = SubResource("BoxShape3D_3rerk")
+disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="torso_root" unique_id=55501056]
+mesh = SubResource("SphereMesh_ykyjo")
+
+[node name="desired_lhand" type="RigidBody3D" parent="torso_root" unique_id=1308116337]
+script = ExtResource("2_uxov2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="torso_root/desired_lhand" unique_id=892798130]
+shape = SubResource("SphereShape3D_eqqp1")
+disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="torso_root/desired_lhand" unique_id=899886470]
+mesh = SubResource("BoxMesh_f46kd")
+
+[node name="desired_rhand" type="RigidBody3D" parent="torso_root" unique_id=698146011]
+script = ExtResource("2_uxov2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="torso_root/desired_rhand" unique_id=139804497]
+shape = SubResource("SphereShape3D_eqqp1")
+disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="torso_root/desired_rhand" unique_id=1914584269]
+mesh = SubResource("BoxMesh_f46kd")
+
+[node name="lhand_muscle" type="Generic6DOFJoint3D" parent="." unique_id=1711148845]
+linear_limit_x/enabled = false
+linear_limit_y/enabled = false
+linear_limit_z/enabled = false
+angular_limit_x/enabled = false
+angular_limit_y/enabled = false
+angular_limit_z/enabled = false
+
+[node name="rhand_muscle" type="Generic6DOFJoint3D" parent="." unique_id=199877208]
+linear_limit_x/enabled = false
+linear_limit_y/enabled = false
+linear_limit_z/enabled = false
+angular_limit_x/enabled = false
+angular_limit_y/enabled = false
+angular_limit_z/enabled = false
+
+[node name="neck_muscle" type="Generic6DOFJoint3D" parent="." unique_id=913523619]
+node_a = NodePath("../head")
+linear_limit_x/enabled = false
+linear_limit_y/enabled = false
+linear_limit_z/enabled = false
+angular_limit_x/enabled = false
+angular_limit_y/enabled = false
+angular_limit_z/enabled = false
+
+[node name="torso_muscle" type="Generic6DOFJoint3D" parent="." unique_id=937771560]
+node_a = NodePath("../torso")
+linear_limit_x/enabled = false
+linear_limit_y/enabled = false
+linear_limit_z/enabled = false
+angular_limit_x/enabled = false
+angular_limit_y/enabled = false
+angular_limit_z/enabled = false
+
+[node name="upright_muscle" type="Generic6DOFJoint3D" parent="." unique_id=1527430483]
+node_a = NodePath("../torso_root")
+linear_limit_x/enabled = false
+linear_limit_y/enabled = false
+linear_limit_z/enabled = false
+angular_limit_x/enabled = false
+angular_limit_y/enabled = false
+angular_limit_z/enabled = false
+
+[node name="physics" type="Node" parent="." unique_id=33355167 node_paths=PackedStringArray("left_hand", "right_hand", "head", "real_origin", "neck_pin", "phys_lhand", "phys_rhand", "phys_head", "phys_torso", "lhand_constraint", "rhand_constraint", "neck_constraint", "upright_constraint", "torso_rotation_constraint", "curr_desired_lhand", "curr_desired_rhand", "control")]
+script = ExtResource("1_eqqp1")
+left_hand = NodePath("../real/lhand")
+right_hand = NodePath("../real/rhand")
+head = NodePath("../real/head")
+real_origin = NodePath("../real")
+neck_pin = NodePath("../torso_root/neck")
+phys_lhand = NodePath("../lhand")
+phys_rhand = NodePath("../rhand")
+phys_head = NodePath("../head")
+phys_torso = NodePath("../torso_root")
+lhand_constraint = NodePath("../lhand_muscle")
+rhand_constraint = NodePath("../rhand_muscle")
+neck_constraint = NodePath("../neck_muscle")
+upright_constraint = NodePath("../upright_muscle")
+torso_rotation_constraint = NodePath("../torso_muscle")
+curr_desired_lhand = NodePath("../torso_root/desired_lhand")
+curr_desired_rhand = NodePath("../torso_root/desired_rhand")
+control = NodePath("../control")
+hand_strength = 0.0
+
+[node name="control" type="Node" parent="." unique_id=1739857043 node_paths=PackedStringArray("root", "physics", "phys_head", "phys_lhand", "phys_rhand", "phys_torso", "real_lhand", "real_rhand", "real_head", "player_attached")]
+script = ExtResource("4_nmc1l")
+root = NodePath("../real")
+physics = NodePath("../physics")
+phys_head = NodePath("../head")
+phys_lhand = NodePath("../lhand")
+phys_rhand = NodePath("../rhand")
+phys_torso = NodePath("../torso_root")
+real_lhand = NodePath("../real/lhand")
+real_rhand = NodePath("../real/rhand")
+real_head = NodePath("../real/head")
+player_attached = [NodePath("../head"), NodePath("../lhand"), NodePath("../rhand"), NodePath("../torso_root"), NodePath("../torso_root/desired_lhand"), NodePath("../torso_root/desired_rhand"), NodePath("../torso")]
+metadata/_custom_type_script = "uid://c50fx4h3jesil"
+
+[node name="torso" type="RigidBody3D" parent="." unique_id=890039173]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mass = 20.0
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="torso" unique_id=1917824014]
+shape = SubResource("BoxShape3D_f46kd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="torso" unique_id=1779618883]
+mesh = SubResource("BoxMesh_3rerk")
+
+[node name="PinJoint3D" type="PinJoint3D" parent="torso" unique_id=564107742]
+node_a = NodePath("..")
+node_b = NodePath("../../torso_root")
