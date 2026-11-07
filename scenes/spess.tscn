@@ -41,6 +41,7 @@ size = Vector3(0.4, 0.4, 0.4)
 [node name="Spess" type="Node3D" unique_id=1076980493]
 
 [node name="Player" parent="." unique_id=853351773 instance=ExtResource("1_86wfv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01, 0, 0)
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=1145635100]
 transform = Transform3D(-0.00452438, -0.9971849, 0.0748447, -0.76891065, -0.044383094, -0.6378138, 0.6393403, -0.06043464, -0.7665453, 1.278132, 0.5238502, -1.4235356)

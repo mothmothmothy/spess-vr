@@ -32,13 +32,18 @@ func apply_equal_angular_impulse(impulse: Vector3, global_position: Vector3, sta
 func _ready():
 	old_transform = hand.global_transform
 
+var desired_hand_transform: Transform3D
+
+func _process(dt: float):
+	desired_hand_transform = physics.real_to_torso_space_local(hand.global_transform)
+
 func _integrate_forces(state: PhysicsDirectBodyState3D):
 	var delta = state.step
 			# PIDish bit
 	var new_transform = hand.global_transform
 	var torso_origin_basis = physics.real_to_torso_space(Transform3D()).basis
 			# spring bit
-	var desired_hand_transform = physics.real_to_torso_space_local(hand.global_transform)
+	#var desired_hand_transform = physics.real_to_torso_space_local(hand.global_transform)
 	if debug_node:
 		debug_node.global_transform = desired_hand_transform
 	var phys_hand_transform = moving_body.global_transform

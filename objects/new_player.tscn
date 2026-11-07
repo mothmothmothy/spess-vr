@@ -81,10 +81,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3013213, 0, 0)
 can_sleep = false
 script = ExtResource("2_4k3br")
 moving_body = NodePath(".")
-reaction_body = NodePath("../torso")
+reaction_body = NodePath("../torso_root")
 physics = NodePath("../physics")
 hand = NodePath("../real/lhand")
-linear_spring_strength = 70.0
+linear_spring_strength = 100.0
 linear_spring_damping = 300.0
 angular_spring_strength = 0.004
 angular_spring_damping = 30.0
@@ -104,10 +104,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, 0)
 can_sleep = false
 script = ExtResource("2_4k3br")
 moving_body = NodePath(".")
-reaction_body = NodePath("../torso")
+reaction_body = NodePath("../torso_root")
 physics = NodePath("../physics")
 hand = NodePath("../real/rhand")
-linear_spring_strength = 70.0
+linear_spring_strength = 100.0
 linear_spring_damping = 300.0
 angular_spring_strength = 0.004
 angular_spring_damping = 30.0
@@ -234,7 +234,7 @@ metadata/_custom_type_script = "uid://c50fx4h3jesil"
 [node name="torso" type="RigidBody3D" parent="." unique_id=890039173]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
 mass = 20.0
-freeze = true
+can_sleep = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="torso" unique_id=1917824014]
 shape = SubResource("BoxShape3D_f46kd")
